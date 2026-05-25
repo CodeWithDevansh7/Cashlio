@@ -1,65 +1,213 @@
-import Image from "next/image";
+import { 
+  Search, 
+  Mic, 
+  LayoutDashboard, 
+  Send, 
+  Clock, 
+  User,
+  ShoppingCart, 
+  Bus, 
+  Home, 
+  Utensils,
+  MoreHorizontal
+} from "lucide-react";
 
-export default function Home() {
+export default function Dashboard() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <div className="flex h-screen w-full bg-background text-foreground overflow-hidden font-sans">
+      
+      {/* 1. LEFT SIDEBAR */}
+      <aside className="w-64 border-r border-border bg-card hidden md:flex flex-col z-20">
+        <div className="p-6 border-b border-border">
+          <h2 className="text-2xl font-bold text-primary tracking-tight">CashLio</h2>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+        <nav className="flex-1 p-4 space-y-2">
+          <NavItem icon={<LayoutDashboard size={20} />} label="Overview" active />
+          <NavItem icon={<Send size={20} />} label="Transfers" />
+          <NavItem icon={<Clock size={20} />} label="History" />
+          <NavItem icon={<User size={20} />} label="Account" />
+        </nav>
+      </aside>
+
+      {/* Main Container */}
+      <div className="flex-1 flex flex-col h-full overflow-hidden">
+        
+        {/* 2. HEADER (With Voice/Intent Recognition Input) */}
+        <header className="h-16 border-b border-border bg-background flex items-center justify-between px-6 sticky top-0 z-10">
+          <h1 className="text-xl font-semibold">Dashboard</h1>
+          
+          <div className="flex items-center gap-4">
+            <div className="relative flex items-center w-80">
+              <Search className="absolute left-3 text-muted-foreground" size={18} />
+              <input 
+                type="text" 
+                placeholder="Try: 'Transfer ₹500 to Manan'" 
+                className="w-full pl-10 pr-10 py-2 rounded-full border border-input bg-muted/50 focus:outline-none focus:ring-2 focus:ring-primary/50 text-sm"
+              />
+              <button className="absolute right-3 text-primary hover:text-primary/80 transition-colors">
+                <Mic size={18} />
+              </button>
+            </div>
+            <div className="h-9 w-9 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-semibold">
+              K
+            </div>
+          </div>
+        </header>
+
+        {/* 3. SCROLLABLE DASHBOARD CONTENT */}
+        <main className="flex-1 overflow-y-auto p-6">
+          <div className="flex flex-col xl:flex-row gap-6 max-w-7xl mx-auto">
+            
+            {/* Left Column: Stats & Detailed History */}
+            <div className="flex-1 space-y-6">
+              
+              {/* Quick Stats Grid */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <StatCard title="Total Balance" value="₹ 1,24,500.00" trend="+2.4%" />
+                <StatCard title="Monthly Expenses" value="₹ 32,400.00" trend="-1.2%" />
+                <StatCard title="Active Savings" value="₹ 45,000.00" trend="+5.0%" />
+              </div>
+
+              {/* Transaction History */}
+              <section className="bg-card border border-border rounded-xl p-6 shadow-sm">
+                <h3 className="font-semibold text-lg mb-6">Recent Activity</h3>
+                
+                <div className="space-y-6">
+                  {/* Today Group */}
+                  <div>
+                    <div className="flex items-center justify-between mb-4 border-b border-border/50 pb-2">
+                      <h4 className="text-sm font-semibold text-muted-foreground">Today</h4>
+                      <MoreHorizontal className="text-muted-foreground" size={16} />
+                    </div>
+                    <div className="space-y-2">
+                      <TransactionItem 
+                        icon={<ShoppingCart size={18} />} color="bg-blue-500" 
+                        title="Grocery" time="5:12 pm" note="Local market" amount="-₹ 3,268.00" 
+                      />
+                      <TransactionItem 
+                        icon={<Send size={18} />} color="bg-purple-500" 
+                        title="Transfer to Manan" time="2:30 pm" note="UPI Payment" amount="-₹ 5,000.00" 
+                      />
+                    </div>
+                  </div>
+
+                  {/* Yesterday Group */}
+                  <div>
+                    <div className="flex items-center justify-between mb-4 border-b border-border/50 pb-2">
+                      <h4 className="text-sm font-semibold text-muted-foreground">Yesterday, 24 May</h4>
+                      <MoreHorizontal className="text-muted-foreground" size={16} />
+                    </div>
+                    <div className="space-y-2">
+                      <TransactionItem 
+                        icon={<Home size={18} />} color="bg-orange-500" 
+                        title="Housing" time="10:00 am" note="Electricity bill" amount="-₹ 1,857.50" 
+                      />
+                      <TransactionItem 
+                        icon={<Utensils size={18} />} color="bg-red-500" 
+                        title="Food and Drink" time="8:45 pm" note="Restaurant" amount="-₹ 1,560.00" 
+                      />
+                    </div>
+                  </div>
+                </div>
+              </section>
+            </div>
+
+            {/* Right Column: Categories & Tips */}
+            <aside className="w-full xl:w-80 space-y-6 shrink-0">
+              
+              {/* Category Progress Card */}
+              <div className="bg-card border border-border rounded-xl p-6 shadow-sm">
+                <h3 className="font-semibold text-lg mb-6">Where your money goes</h3>
+                <div className="space-y-5">
+                  <CategoryProgress title="Food and Drinks" amount="₹ 8,724" percentage={35} color="bg-emerald-500" />
+                  <CategoryProgress title="Shopping" amount="₹ 13,782" percentage={55} color="bg-blue-500" />
+                  <CategoryProgress title="Housing" amount="₹ 9,285" percentage={40} color="bg-orange-500" />
+                  <CategoryProgress title="Transportation" amount="₹ 4,207" percentage={25} color="bg-purple-500" />
+                </div>
+              </div>
+
+              {/* Tips Card */}
+              <div className="bg-primary/5 border border-primary/20 rounded-xl p-6 relative overflow-hidden">
+                <div className="relative z-10">
+                  <h4 className="text-base font-bold text-foreground mb-2">Save more money</h4>
+                  <p className="text-sm text-muted-foreground leading-relaxed mb-4">
+                    Based on your patterns, you can save up to ₹2,500 this month by adjusting your grocery spending limits.
+                  </p>
+                  <button className="w-full bg-foreground text-background text-sm font-semibold py-2.5 rounded-lg hover:opacity-90 transition-opacity">
+                    VIEW TIPS
+                  </button>
+                </div>
+                {/* Decorative background shape */}
+                <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-primary/10 rounded-full blur-2xl"></div>
+              </div>
+
+            </aside>
+            
+          </div>
+        </main>
+      </div>
+    </div>
+  );
+}
+
+// --- Reusable Components ---
+
+function NavItem({ icon, label, active = false }: { icon: React.ReactNode, label: string, active?: boolean }) {
+  return (
+    <a href="#" className={`flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors ${
+      active ? 'bg-primary/10 text-primary font-medium' : 'text-muted-foreground hover:bg-muted hover:text-foreground'
+    }`}>
+      {icon}
+      <span>{label}</span>
+    </a>
+  );
+}
+
+function StatCard({ title, value, trend }: { title: string, value: string, trend: string }) {
+  const isPositive = trend.startsWith('+');
+  return (
+    <div className="bg-card border border-border rounded-xl p-5 shadow-sm">
+      <p className="text-sm font-medium text-muted-foreground">{title}</p>
+      <h3 className="text-xl font-bold mt-2 text-foreground">{value}</h3>
+      <p className={`text-sm mt-2 font-medium ${isPositive ? 'text-emerald-500' : 'text-red-500'}`}>
+        {trend} from last month
+      </p>
+    </div>
+  );
+}
+
+function TransactionItem({ icon, color, title, time, note, amount }: { icon: React.ReactNode, color: string, title: string, time: string, note: string, amount: string }) {
+  return (
+    <div className="flex items-center justify-between py-2 group hover:bg-muted/50 px-2 -mx-2 rounded-lg transition-colors">
+      <div className="flex items-center gap-4">
+        <div className={`h-10 w-10 rounded-full flex items-center justify-center text-white shadow-sm ${color}`}>
+          {icon}
         </div>
-      </main>
+        <div>
+          <p className="text-sm font-medium text-foreground">{title}</p>
+          <p className="text-xs text-muted-foreground mt-0.5">{time} • {note}</p>
+        </div>
+      </div>
+      <span className="font-semibold text-foreground text-sm">
+        {amount}
+      </span>
+    </div>
+  );
+}
+
+function CategoryProgress({ title, amount, percentage, color }: { title: string, amount: string, percentage: number, color: string }) {
+  return (
+    <div>
+      <div className="flex items-center justify-between mb-2">
+        <span className="text-sm font-medium text-muted-foreground">{title}</span>
+        <span className="text-sm font-medium text-foreground">{amount}</span>
+      </div>
+      <div className="h-2 w-full bg-muted rounded-full overflow-hidden">
+        <div 
+          className={`h-full rounded-full ${color}`} 
+          style={{ width: `${percentage}%` }}
+        ></div>
+      </div>
     </div>
   );
 }

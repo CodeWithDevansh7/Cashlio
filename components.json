@@ -1,0 +1,9 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "components",
+  "dependencies": [
+    "radix-ui/react-slot"
+  ],
+  "registryDependencies": [],
+  "files": []
+}
