@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { PieChart } from 'lucide-react';
+import Link from 'next/link';
 
 export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -19,7 +20,9 @@ export function Navbar() {
           <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-emerald-400 to-teal-500 flex items-center justify-center text-white">
             <PieChart size={18} />
           </div>
-          <span className="text-2xl font-bold tracking-tight text-slate-900">Cashlio</span>
+          <Link href="/">
+            <span className="text-2xl font-bold tracking-tight text-slate-900">Cashlio</span>
+          </Link>
         </div>
         <div className="hidden md:flex items-center gap-6">
           <button className="text-sm font-medium text-slate-600 hover:text-slate-900 transition-colors">
