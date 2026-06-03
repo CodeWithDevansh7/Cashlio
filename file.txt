@@ -1,0 +1,78 @@
+Create the frontend for my project “Cashlio” using:
+
+- Next.js
+- TypeScript
+- Tailwind CSS
+- Shadcn UI
+
+Tasks:
+1. Initialize project
+2. Setup Tailwind CSS
+3. Setup TypeScript properly
+4. Install Shadcn UI
+5. Create clean scalable folder structure
+6. Setup global styles
+7. Configure dark/light compatible theme support
+8. Use App Router
+
+Folder structure should include:
+- app
+- components
+- hooks
+- services
+- lib
+- types
+- context
+- utils
+
+Use production-level clean architecture.
+
+Create a Terms & Conditions page for Cashlio.
+
+1. Create route: app/terms/page.tsx
+2. Match existing Cashlio UI/theme using Tailwind
+3. Reuse components from @components/layout/footer.tsx and @components/layout/navbar.tsx if available
+4. Add sections:
+ Acceptance of Terms
+ Use of Service
+ User Data & Privacy
+ Limitations of Liability
+ Changes to Terms
+ Contact Information
+5. Add SEO metadata:
+ title: Terms & Conditions | Cashlio
+6. Update footer Terms link inside @components/layout/footer.tsx (or footer component file) from # to /terms
+7. Keep it responsive, clean, and production-ready
+8. Use TypeScript and semantic HTML only
+
+git commit -m "landing: add terms and conditions page and route”
+
+Create a Privacy Policy page for Cashlio.
+
+1. Create: app/privacy/page.tsx
+2. Match existing Cashlio Tailwind UI
+3. Reuse components from @components/layout if available
+4. Read and follow the styling/text structure used in @app/terms/page.tsx so both pages look consistent
+5. Add sections:
+Data We Collect
+How We Use Your Data
+Data Storage
+Third-Party Services
+Contact Us
+6. Add metadata title: Privacy Policy | Cashlio
+7. Update footer Privacy link inside @components/layout/footer.tsx (or footer component file) from # to /privacy
+8. Keep code responsive, clean, TypeScript-based, and semantic HTML only
+
+Add a video modal for the “View Demo” button inside @app/page.tsx.
+
+Requirements:
+
+1. Clicking the button opens a modal overlay
+2. Modal contains an embedded YouTube iframe (use placeholder URL)
+3. Video should play inside the modal
+4. Clicking close button or outside modal closes it
+5. Video must stop playing when modal closes
+6. Use only React state + vanilla JS logic (no libraries)
+7. Match existing Cashlio UI/Tailwind styling
+8. Do not modify unrelated sections/components
+9. Keep code clean and responsive
