@@ -1,14 +1,16 @@
 'use client';
+import { useState } from 'react';
 
-import { 
-  BarChart3, 
-  PieChart, 
-  TrendingUp, 
-  ShieldCheck, 
-  Smartphone, 
-  Mic, 
+import {
+  BarChart3,
+  PieChart,
+  TrendingUp,
+  ShieldCheck,
+  Smartphone,
+  Mic,
   ArrowRight,
-  CheckCircle2
+  CheckCircle2,
+  X
 } from 'lucide-react';
 
 // Import your new components
@@ -18,6 +20,7 @@ import { HeroCarousel } from '../components/sections/HeroCarousel';
 import { MissionCard, StatCounter, FeatureCard } from '../components/ui/LandingCards';
 
 export default function CashlioLanding() {
+  const [modalOpen, setModalOpen] = useState(false);
   return (
     <div className="min-h-screen bg-[#fafbfc] text-slate-900 font-sans selection:bg-emerald-100 selection:text-emerald-900 overflow-x-hidden">
       
@@ -33,11 +36,8 @@ export default function CashlioLanding() {
       <section className="relative pt-32 pb-20 lg:pt-48 lg:pb-32 px-6 max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-16">
         <div className="flex-1 text-center lg:text-left z-10 animate-in fade-in slide-in-from-bottom-5 duration-700">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-50 border border-emerald-100 text-emerald-700 text-sm font-medium mb-6">
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-            </span>
-            Financial clarity achieved
+            <span className="relative flex h-2 w-2"></span>
+            Personal Finance Tracker
           </div>
           <h1 className="text-5xl lg:text-7xl font-extrabold tracking-tight mb-6 text-slate-900 leading-[1.1]">
             Track Every Rupee. <br />
@@ -49,10 +49,12 @@ export default function CashlioLanding() {
             Gain complete control over your finances. Cashlio helps you monitor daily habits, visualize weekly trends, and achieve your yearly savings goals with effortless precision.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
-            <button className="w-full sm:w-auto px-8 py-4 rounded-full bg-gradient-to-r from-emerald-500 to-teal-500 text-white font-medium hover:shadow-lg hover:shadow-emerald-500/25 transition-all flex items-center justify-center gap-2">
+            <button className="w-full sm:w-auto px-8 py-4 rounded-full bg-gradient-to-r from-emerald-500 to-teal-500 text-white font-medium hover:shadow-lg hover:shadow-emerald-500/25 transition-all flex items-center justify-center gap-2 cursor-pointer">
               Get Started Free <ArrowRight size={18} />
             </button>
-            <button className="w-full sm:w-auto px-8 py-4 rounded-full bg-white border border-slate-200 text-slate-700 font-medium hover:bg-slate-50 hover:shadow-sm transition-all">
+            <button className="w-full sm:w-auto px-8 py-4 rounded-full bg-white border border-slate-200 text-slate-700 font-medium hover:bg-slate-50 hover:shadow-sm transition-all cursor-pointer"
+              onClick={() => setModalOpen(true)}
+            >
               View Demo
             </button>
           </div>
@@ -105,6 +107,25 @@ export default function CashlioLanding() {
       </section>
 
       <Footer />
+      {modalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm" onClick={() => setModalOpen(false)}>
+          <div className="relative bg-white rounded-lg shadow-xl w-full max-w-2xl mx-4 py-3" onClick={(e) => e.stopPropagation()}>
+            <button onClick={() => setModalOpen(false)} className="absolute top-2 right-2 text-slate-500 hover:text-slate-900 cursor-pointer">
+              <X size={20} />
+            </button>
+            <div className="py-6">
+              <iframe
+                className="w-full h-[400px]"
+                src="https://www.youtube.com/embed/VIDEO_ID?autoplay=1"
+                title="Demo video"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              ></iframe>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

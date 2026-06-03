@@ -66,9 +66,9 @@ export function HeroCarousel() {
     <div className="relative w-full aspect-square md:aspect-[4/3] rounded-[2rem] bg-white/50 backdrop-blur-xl border border-white/60 shadow-2xl shadow-slate-200/50 p-6 flex flex-col">
       <div className="flex items-center justify-between mb-8">
         <div className="flex gap-1.5">
-          <div className="w-3 h-3 rounded-full bg-slate-200" />
-          <div className="w-3 h-3 rounded-full bg-slate-200" />
-          <div className="w-3 h-3 rounded-full bg-slate-200" />
+          <div className="w-3 h-3 rounded-full bg-red-400" />
+          <div className="w-3 h-3 rounded-full bg-orange-400" />
+          <div className="w-3 h-3 rounded-full bg-green-400" />
         </div>
         <div className="text-xs font-semibold text-slate-400 tracking-wider uppercase">Cashlio UI</div>
       </div>
@@ -78,7 +78,7 @@ export function HeroCarousel() {
           <motion.div
             key={activeSlide}
             initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} transition={{ duration: 0.3 }}
-            className="absolute inset-0 w-full h-full bg-white rounded-2xl shadow-sm border border-slate-100 p-6 flex flex-col"
+            className="absolute inset-0 w-full h-full bg-white rounded-2xl shadow-sm border border-slate-100 px-6 pb-6 pt-2 flex flex-col"
           >
             <h3 className="text-lg font-bold text-slate-900 mb-6">{slides[activeSlide].title}</h3>
             {slides[activeSlide].content}
@@ -86,7 +86,7 @@ export function HeroCarousel() {
         </AnimatePresence>
       </div>
 
-      <div className="flex justify-center gap-2 mt-6 z-20 relative">
+      <div className="flex justify-center gap-2 z-20 mt-4 relative">
         {slides.map((_, i) => (
           <button 
             key={i} 
