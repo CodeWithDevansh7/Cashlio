@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "WebSearch",
+      "Bash(yes \"\")",
+      "Bash(npx shadcn@latest init)"
+    ]
+  }
+}
