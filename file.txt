@@ -76,3 +76,31 @@ Requirements:
 7. Match existing Cashlio UI/Tailwind styling
 8. Do not modify unrelated sections/components
 9. Keep code clean and responsive
+
+
+Enter Plan mode and create an implementation plan.
+
+Read:
+
+```txt
+.claude/specs/01-database-setup.md
+```
+
+Follow all referenced documents mentioned in the spec.
+
+Analyze the current codebase and project structure before planning.
+
+Generate a detailed implementation plan and save it to:
+
+```txt
+.claude/plans/01-database-setup.md
+```
+
+The plan should:
+
+1. List all files that need to be created or modified.
+2. Break implementation into logical phases.
+3. Identify dependencies between phases.
+4. Follow all requirements, constraints, and coding rules defined in the spec and referenced documents.
+5. Focus on implementation strategy, not code generation.
+6. Include a final verification checklist based on the acceptance criteria.

@@ -1,68 +1,291 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+## Project Overview
 
-## Development Commands
+Cashlio is a personal finance and expense tracking application built with Next.js and PostgreSQL.
 
-- Start development server: `npm run dev`
-- Build for production: `npm run build`
-- Start production server: `npm run start`
-- Lint code: `npm run lint`
+The long-term goal is to support:
 
-The development server runs at http://localhost:3000 by default.
+* Authentication
+* Expense tracking
+* Income tracking
+* Budgeting
+* Financial analytics
+* Dashboard insights
+
+Current development follows a spec-driven workflow using the `.claude/` directory.
+
+---
+
+## Tech Stack
+
+### Frontend
+
+* Next.js 16 (App Router)
+* React
+* TypeScript
+* Tailwind CSS v4
+* Framer Motion
+* Lucide React
+
+### Backend
+
+* Next.js Route Handlers / Server Components
+* PostgreSQL
+* pg (node-postgres)
+
+### Database Access
+
+Raw SQL only.
+
+Do NOT use:
+
+* Prisma
+* Drizzle
+* Sequelize
+* TypeORM
+* Knex
+* Any ORM or query builder
+
+---
 
 ## Project Structure
 
-This is a Next.js 16.2.6 application using the App Router with TypeScript and Tailwind CSS.
+```txt
+cashlio/
+│
+├── app/
+│   ├── dashboard/
+│   ├── privacy/
+│   ├── terms/
+│   ├── page.tsx
+│   ├── layout.tsx
+│   └── globals.css
+│
+├── components/
+│   ├── layout/
+│   ├── sections/
+│   └── ui/
+│
+├── lib/
+│   ├── db.ts
+│   ├── init-db.ts
+│   ├── utils.ts
+│   └── queries/
+│       ├── users.ts
+│       ├── categories.ts
+│       └── transactions.ts
+│
+├── sql/
+│   ├── schema.sql
+│   └── seed.sql
+│
+└── .claude/
+    ├── commands/
+    ├── plans/
+    ├── references/
+    └── specs/
+```
 
-### Key Directories
+---
 
-- `app/` - Contains all pages and route groups using the Next.js App Router
-  - `app/page.tsx` - Landing page (home route)
-  - `app/dashboard/page.tsx` - Dashboard interface
-  - `app/terms/page.tsx` - Terms and conditions page
-  - `app/privacy/page.tsx` - Privacy policy page
-  - `app/layout.tsx` - Root layout with global CSS and font setup
-  - `app/globals.css` - Global stylesheet
+## Database Architecture
 
-- `components/` - Reusable UI components
-  - `components/layout/` - Navbar and Footer components
-  - `components/sections/` - Section-specific components (e.g., HeroCarousel)
-  - `components/ui/` - Shared UI components (LandingCards, etc.)
-  - Feature-specific components: `categoryProgress.tsx`, `transactionItem.tsx`, `statCard.tsx`, `navItem.tsx`
+Current database tables:
 
-### Technology Stack
+### users
 
-- **Framework**: Next.js 16.2.6 (React 19.2.4)
-- **Language**: TypeScript
-- **Styling**: Tailwind CSS v4 with custom CSS in globals.css
-- **Icons**: Lucide React
-- **Animations**: Framer Motion
-- **State Management**: React hooks (useState) - no external state library
+Stores application users.
 
-### Architecture Notes
+Key fields:
 
-1. **Routing**: Uses Next.js App Router with file-system based routing
-2. **Styling**: Primarily Tailwind utility classes with some custom CSS for background effects
-3. **Components**: Follows a combination of atomic and feature-based organization
-4. **Data Flow**: Current implementation uses static data and mockups; no backend integration visible
-5. **Authentication**: Not implemented in the current codebase
+* id
+* name
+* email
+* password_hash
+* created_at
 
-### Common Development Tasks
+### categories
 
-- To modify the landing page: Edit `app/page.tsx` and related components in `components/ui/LandingCards.tsx` and `components/sections/HeroCarousel.tsx`
-- To modify the dashboard: Edit `app/dashboard/page.tsx` and related components in the components directory
-- To add new routes: Create new folders under `app/` with a `page.tsx` file
-- To add shared components: Place in `components/ui/` or appropriate subdirectory
-- To adjust styling: Modify Tailwind classes directly or edit `app/globals.css` for global styles
+Stores transaction categories.
 
-### Linting and Formatting
+Expense categories:
 
-- ESLint is configured with `eslint-config-next` for Next.js and TypeScript
-- Run `npm run lint` to check for linting errors
-- No formatter is explicitly configured; rely on editor settings for Prettier or similar
+* Food
+* Transport
+* Bills
+* Health
+* Entertainment
+* Shopping
+* Other
 
-### Deployment
+Income categories:
 
-- The application is configured for easy deployment to Vercel (default for Next.js)
-- Build output is optimized via `next build` and `next start`
+* Salary
+* Freelance
+* Investment
+* Business
+* Other Income
+
+### transactions
+
+Stores income and expense records.
+
+Key fields:
+
+* id
+* user_id
+* category_id
+* amount
+* transaction_type
+* transaction_date
+* description
+* created_at
+
+---
+
+## Database Rules
+
+All SQL must be parameterized.
+
+Allowed:
+
+```ts
+await query(
+  "SELECT * FROM users WHERE email = $1",
+  [email]
+);
+```
+
+Not allowed:
+
+```ts
+`SELECT * FROM users WHERE email = '${email}'`
+```
+
+Store money as:
+
+```sql
+NUMERIC(10,2)
+```
+
+Never use:
+
+```sql
+FLOAT
+REAL
+DOUBLE
+```
+
+Passwords must be hashed using bcrypt.
+
+Maintain referential integrity.
+
+Do not hardcode category IDs.
+
+Load categories from the database when needed.
+
+---
+
+## Query Layer
+
+Database access should be centralized in:
+
+```txt
+lib/queries/
+```
+
+Available modules:
+
+* users.ts
+* categories.ts
+* transactions.ts
+
+Before creating new queries:
+
+1. Check existing query modules.
+2. Reuse existing functions whenever possible.
+3. Keep database logic out of UI components.
+
+---
+
+## App Router Rules
+
+* Prefer Server Components by default.
+* Use Client Components only when required.
+* New pages should be added under `app/`.
+* New API endpoints should be added under `app/api/`.
+
+---
+
+## Spec Workflow
+
+Specifications are stored in:
+
+```txt
+.claude/specs/
+```
+
+Implementation plans are stored in:
+
+```txt
+.claude/plans/
+```
+
+Reference documents are stored in:
+
+```txt
+.claude/references/
+```
+
+When creating a new spec:
+
+1. Read CLAUDE.md.
+2. Review existing specs.
+3. Respect current project structure.
+4. Reuse existing database architecture.
+5. Avoid introducing conflicting patterns.
+
+---
+
+## Current Status
+
+Completed:
+
+* PostgreSQL setup
+* Connection pool
+* Database initialization
+* Database seeding
+* Query layer
+
+In Progress:
+
+* Backend foundation
+
+Not Yet Implemented:
+
+* Authentication
+* User registration/login
+* API routes
+* Budgeting
+* Analytics
+* Dashboard database integration
+
+---
+
+## Validation Checklist
+
+Before proposing or implementing a feature:
+
+* Follows existing project structure
+* Uses PostgreSQL and pg
+* Uses parameterized SQL
+* Reuses query layer when possible
+* Preserves foreign key relationships
+* Uses TypeScript strict mode
+* Avoids ORM usage
+* Avoids duplicate architecture
+* Keeps features compatible with future authentication and analytics modules
+
+```
+```
