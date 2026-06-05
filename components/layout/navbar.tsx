@@ -28,9 +28,12 @@ export function Navbar() {
           <button className="text-sm font-medium text-slate-600 hover:text-slate-900 transition-colors">
             Log in
           </button>
-          <button className="bg-slate-900 text-white px-5 py-2.5 rounded-full text-sm font-medium hover:bg-slate-800 transition-all shadow-md hover:shadow-lg">
+          <Link
+            href="/register"
+            className="bg-slate-900 text-white px-5 py-2.5 rounded-full text-sm font-medium hover:bg-slate-800 transition-all shadow-md hover:shadow-lg"
+          >
             Create Account
-          </button>
+          </Link>
         </div>
       </div>
     </header>
