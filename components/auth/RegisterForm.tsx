@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { FormField } from "@/components/ui/FormField";
 import { SubmitButton } from "@/components/ui/SubmitButton";
@@ -14,6 +15,7 @@ const PASSWORD_MAX = 200;
 const NAME_MAX = 100;
 
 export function RegisterForm() {
+    const router = useRouter();
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -81,7 +83,7 @@ export function RegisterForm() {
             });
 
             if (res.status === 201) {
-                window.location.assign("/dashboard");
+                router.push("/login");
                 return;
             }
 
