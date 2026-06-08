@@ -41,7 +41,7 @@ This feature does not include:
 * As a registered user, after successful login I am redirected to the dashboard.
 * As a registered user, after successful login I remain logged in across page refreshes (via the existing session cookie).
 * As a logged-in user, I can click "Log out" in the navbar and end my session.
-* As a logged-in user, after logging out I am redirected to the login page and can no longer access authenticated areas.
+* As a logged-in user, after logging out I am redirected to the login page and my authenticated session is cleared.
 * As a new visitor, I can navigate from the landing page to the login page.
 
 ## Routes / Pages
